@@ -29,6 +29,11 @@
   .header p{color:#555555;font-size:14px;font-weight:300;line-height:1.8;max-width:420px;margin:0 auto;}
   .client-id-tag{display:inline-block;margin-top:14px;padding:6px 16px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.3);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;color:var(--gold);}
 
+  /* AUTOSAVE */
+  .restore-note{display:none;max-width:420px;margin:14px auto 0;padding:10px 14px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.35);border-radius:4px;font-size:13px;color:#1e7e45;line-height:1.6;}
+  .restore-note.show{display:block;}
+  .save-status{display:block;margin-top:10px;font-size:11px;color:#888888;letter-spacing:0.5px;min-height:16px;}
+
   /* STEPS */
   .steps-row{display:flex;align-items:center;justify-content:center;margin-bottom:40px;}
   .step-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
@@ -91,13 +96,15 @@
 
   /* CRED BOX */
   .cred-box{background:var(--black3);border:1px solid rgba(212,160,23,0.1);border-radius:4px;padding:22px;margin-bottom:14px;}
-  .cred-label{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+  .cred-label{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
   .bureau-tag{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
   .tag-experian{background:rgba(220,53,69,0.13);color:#e06070;border:1px solid rgba(220,53,69,0.28);}
   .tag-equifax{background:rgba(0,123,255,0.1);color:#5da8ff;border:1px solid rgba(0,123,255,0.22);}
   .tag-tu{background:rgba(40,167,69,0.1);color:#5cd98a;border:1px solid rgba(40,167,69,0.22);}
   .tag-sc{background:rgba(212,160,23,0.1);color:var(--gold2);border:1px solid var(--border);}
   .cred-site{font-size:11px;color:var(--gray);font-weight:300;}
+  .create-link{margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:7px 14px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.35);border-radius:3px;color:var(--gold2);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-decoration:none;transition:all 0.2s;}
+  .create-link:hover,.create-link:focus-visible{background:rgba(212,160,23,0.18);border-color:var(--gold);outline:none;}
 
   /* BUTTONS */
   .nav-buttons{display:flex;gap:12px;justify-content:flex-end;margin-top:32px;padding-top:20px;border-top:1px solid rgba(212,160,23,0.15);}
@@ -158,6 +165,8 @@
     <div class="header-divider"></div>
     <p>Complete all sections below to get started. Your information is 100% confidential and used solely to begin your credit restoration journey.</p>
     <div class="client-id-tag">🔢 Client ID: <span id="headerClientId"></span></div>
+    <div class="restore-note" id="restoreNote">✓ Welcome back. Your progress was saved, so you can pick up where you left off.</div>
+    <span class="save-status" id="saveStatus">Your progress saves automatically on this device.</span>
   </div>
 
   <div class="steps-row" id="stepsRow"></div>
@@ -190,7 +199,7 @@
         </div>
         <div class="field">
           <label>Full Social Security Number <span class="req">*</span></label>
-          <input type="text" id="ssn4" placeholder="XXX-XX-XXXX" maxlength="11" inputmode="numeric" id="ssn4">
+          <input type="text" id="ssn4" placeholder="XXX-XX-XXXX" maxlength="11" inputmode="numeric">
           <span class="err-msg" id="e-ssn4">Please enter a valid 9-digit Social Security Number.</span>
         </div>
         <div class="field">
@@ -276,6 +285,8 @@
       <div style="background:rgba(212,160,23,0.12);border:2px solid var(--gold);border-radius:8px;padding:18px 20px;margin-bottom:24px;">
         <p style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">⚠️ Important — Do This First</p>
         <p style="font-size:14px;color:var(--white);line-height:1.8;margin:0;">First, create your account at <a href="https://www.smartcredit.com/crk" target="_blank" style="color:var(--gold2);font-weight:700;text-decoration:underline;">www.smartcredit.com/crk</a> — then come back and enter your login credentials below so we can run your full credit audit.</p>
+        <p style="font-size:13px;color:var(--white);line-height:1.7;margin:12px 0 0;padding-top:12px;border-top:1px solid rgba(212,160,23,0.25);">💳 <strong style="color:var(--gold2);">About $29/mo</strong> — your SmartCredit account must stay active during your credit repair. Save your login.</p>
+        <p style="font-size:11px;color:var(--gray);font-style:italic;line-height:1.6;margin:6px 0 0;">*Price may change based on their current offer.</p>
       </div>
       <div class="cred-box">
         <div class="cred-label">
@@ -322,21 +333,30 @@
         </div>
       </div>
       <div class="cred-box">
-        <div class="cred-label"><span class="bureau-tag tag-experian">Experian</span><span class="cred-site">experian.com</span></div>
+        <div class="cred-label">
+          <span class="bureau-tag tag-experian">Experian</span><span class="cred-site">experian.com</span>
+          <a class="create-link" href="https://www.experian.com" target="_blank" rel="noopener">Create an account ↗</a>
+        </div>
         <div class="field-grid cols-2">
           <div class="field"><label>Username / Email</label><input type="text" id="expUser" placeholder="username or email"><span class="err-msg" id="e-expUser">Required.</span></div>
           <div class="field"><label>Password</label><input type="text" id="expPass" placeholder="password"><span class="err-msg" id="e-expPass">Required.</span></div>
         </div>
       </div>
       <div class="cred-box">
-        <div class="cred-label"><span class="bureau-tag tag-equifax">Equifax</span><span class="cred-site">equifax.com</span></div>
+        <div class="cred-label">
+          <span class="bureau-tag tag-equifax">Equifax</span><span class="cred-site">equifax.com</span>
+          <a class="create-link" href="https://www.equifax.com" target="_blank" rel="noopener">Create an account ↗</a>
+        </div>
         <div class="field-grid cols-2">
           <div class="field"><label>Username / Email</label><input type="text" id="eqUser" placeholder="username or email"><span class="err-msg" id="e-eqUser">Required.</span></div>
           <div class="field"><label>Password</label><input type="text" id="eqPass" placeholder="password"><span class="err-msg" id="e-eqPass">Required.</span></div>
         </div>
       </div>
       <div class="cred-box">
-        <div class="cred-label"><span class="bureau-tag tag-tu">TransUnion</span><span class="cred-site">transunion.com</span></div>
+        <div class="cred-label">
+          <span class="bureau-tag tag-tu">TransUnion</span><span class="cred-site">transunion.com</span>
+          <a class="create-link" href="https://www.transunion.com" target="_blank" rel="noopener">Create an account ↗</a>
+        </div>
         <div class="field-grid cols-2">
           <div class="field"><label>Username / Email</label><input type="text" id="tuUser" placeholder="username or email"><span class="err-msg" id="e-tuUser">Required.</span></div>
           <div class="field"><label>Password</label><input type="text" id="tuPass" placeholder="password"><span class="err-msg" id="e-tuPass">Required.</span></div>
@@ -386,13 +406,30 @@
 const SHEET_URL   = 'https://script.google.com/macros/s/AKfycbyErbSlE4KyjIM3QEFILKN4R0t-D03Z7TKQyjPV7RZc4SqXkqgMhI4uu3TZT1UOS5PmdQ/exec';
 const OWNER_EMAIL = 'crkintake@gmail.com';
 
-// Client ID
-const CLIENT_ID = 'CRK-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2,5).toUpperCase();
+// ── AUTOSAVE SETUP ──
+// Regular fields + current step + Client ID → localStorage (survives closing the browser).
+// SSN, passwords, and document photos → sessionStorage (kept only while this tab is open,
+// so they survive the phone reloading the tab, but are wiped when the tab is closed).
+const SAVE_KEY      = 'crk-intake-progress';
+const SECURE_KEY    = 'crk-intake-secure';
+const SAVE_FIELDS   = ['firstName','lastName','dob','phone','email','address','scUser','expUser','eqUser','tuUser'];
+const SECURE_FIELDS = ['ssn4','scPass','expPass','eqPass','tuPass'];
+
+function readStore(store, key) {
+  try { return JSON.parse(store.getItem(key) || 'null'); } catch (e) { return null; }
+}
+const savedProgress = readStore(localStorage, SAVE_KEY);
+const savedSecure   = readStore(sessionStorage, SECURE_KEY);
+
+// Client ID (kept the same if the client comes back)
+const CLIENT_ID = (savedProgress && savedProgress.clientId) ||
+  ('CRK-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2,5).toUpperCase());
 document.getElementById('headerClientId').textContent = CLIENT_ID;
 
 // Steps
 const TOTAL = 5, LABELS = ['Personal','Documents','SmartCredit','Bureaus','Review'];
 let current = 0;
+let submitted = false;
 const row = document.getElementById('stepsRow');
 LABELS.forEach((lbl, i) => {
   const item = document.createElement('div');
@@ -445,7 +482,7 @@ function initAutocomplete() {
   const ac = new google.maps.places.Autocomplete(input, { types:['address'], componentRestrictions:{country:'us'} });
   ac.addListener('place_changed', () => {
     const place = ac.getPlace();
-    if (place.formatted_address) { input.value = place.formatted_address; setErr('address',false); }
+    if (place.formatted_address) { input.value = place.formatted_address; setErr('address',false); saveProgress(); }
   });
 }
 
@@ -487,6 +524,13 @@ function compressImage(file) {
   });
 }
 
+function showFileStatus(zoneId, statusId, text) {
+  const statusEl = document.getElementById(statusId);
+  statusEl.textContent = text;
+  statusEl.style.display = 'block';
+  document.getElementById(zoneId).style.borderColor = 'var(--success)';
+}
+
 function handleFile(input, zoneId, statusId) {
   const file = input.files && input.files[0];
   if (!file) return;
@@ -499,8 +543,8 @@ function handleFile(input, zoneId, statusId) {
   compressImage(file).then(result => {
     if (zoneId==='dlZone')  { dlFileData=result.data;  dlFileType=result.type;  dlFileName=file.name;  dlReady=true; }
     else                    { poaFileData=result.data; poaFileType=result.type; poaFileName=file.name; poaReady=true; }
-    statusEl.textContent = '✓ ' + file.name;
-    document.getElementById(zoneId).style.borderColor = 'var(--success)';
+    showFileStatus(zoneId, statusId, '✓ ' + file.name);
+    saveProgress();
   });
 }
 
@@ -510,52 +554,59 @@ document.querySelectorAll('.upload-zone').forEach(z => {
   z.addEventListener('drop', () => z.classList.remove('drag'));
 });
 
-// Validation
-function validateStep(step) {
+// Validation (quiet = check without showing error messages; used when restoring)
+function validateStep(step, quiet) {
+  const mark = quiet ? function(){} : setErr;
   let ok = true;
   if (step === 0) {
     ['firstName','lastName','dob','address'].forEach(id => {
       const empty = !document.getElementById(id).value.trim();
-      setErr(id, empty); if (empty) ok = false;
+      mark(id, empty); if (empty) ok = false;
     });
     const ssn = document.getElementById('ssn4').value.replace(/\D/g,'');
     const badSsn = ssn.length !== 9;
-    setErr('ssn4', badSsn); if (badSsn) ok = false;
+    mark('ssn4', badSsn); if (badSsn) ok = false;
     const email = document.getElementById('email').value.trim();
     const badEmail = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setErr('email', badEmail); if (badEmail) ok = false;
+    mark('email', badEmail); if (badEmail) ok = false;
     const phone = document.getElementById('phone').value.replace(/\D/g,'');
     const badPhone = phone.length !== 10;
-    setErr('phone', badPhone); if (badPhone) ok = false;
+    mark('phone', badPhone); if (badPhone) ok = false;
   }
   if (step === 1) {
-    if (!dlReady)  { setErr('dlFile',  true, "Please upload your Driver's License."); ok = false; }
-    if (!poaReady) { setErr('poaFile', true, 'Please upload your Proof of Address.'); ok = false; }
+    if (!dlReady)  { mark('dlFile',  true, "Please upload your Driver's License."); ok = false; }
+    if (!poaReady) { mark('poaFile', true, 'Please upload your Proof of Address.'); ok = false; }
   }
   if (step === 2) {
     ['scUser','scPass'].forEach(id => {
       const empty = !document.getElementById(id).value.trim();
-      setErr(id, empty); if (empty) ok = false;
+      mark(id, empty); if (empty) ok = false;
     });
   }
   if (step === 3) {
     ['expUser','expPass','eqUser','eqPass','tuUser','tuPass'].forEach(id => {
       const empty = !document.getElementById(id).value.trim();
-      setErr(id, empty); if (empty) ok = false;
+      mark(id, empty); if (empty) ok = false;
     });
   }
   return ok;
 }
 
-// Navigation
-function goTo(step) {
-  if (step > current && !validateStep(current)) return;
+// Show a step without validating (used by goTo and by restore)
+function showStep(step) {
   document.getElementById('step-'+current)?.classList.remove('visible');
   current = step;
   if (step===4) buildSummary();
   const next = document.getElementById('step-'+step);
   if (next) { next.style.animation='none'; next.offsetHeight; next.style.animation=''; next.classList.add('visible'); }
   updateSteps();
+}
+
+// Navigation
+function goTo(step) {
+  if (step > current && !validateStep(current)) return;
+  showStep(step);
+  saveProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -593,6 +644,81 @@ function buildSummary() {
     ).join('') + '</div>'
   ).join('');
 }
+
+// ── AUTOSAVE ──
+let saveTimer = null;
+function saveProgress() {
+  if (submitted) return;
+  const fields = {};
+  SAVE_FIELDS.forEach(id => fields[id] = document.getElementById(id).value);
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ clientId: CLIENT_ID, step: current, fields, savedAt: Date.now() }));
+  } catch (e) {}
+
+  const secure = {};
+  SECURE_FIELDS.forEach(id => secure[id] = document.getElementById(id).value);
+  secure.files = {
+    dl:  dlReady  ? { data: dlFileData,  type: dlFileType,  name: dlFileName  } : null,
+    poa: poaReady ? { data: poaFileData, type: poaFileType, name: poaFileName } : null
+  };
+  try { sessionStorage.setItem(SECURE_KEY, JSON.stringify(secure)); }
+  catch (e) {
+    // Photos too big for storage: keep the typed values at least
+    delete secure.files;
+    try { sessionStorage.setItem(SECURE_KEY, JSON.stringify(secure)); } catch (e2) {}
+  }
+
+  const status = document.getElementById('saveStatus');
+  status.textContent = '✓ Progress saved';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { status.textContent = 'Your progress saves automatically on this device.'; }, 1500);
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
+  try { sessionStorage.removeItem(SECURE_KEY); } catch (e) {}
+}
+
+function restoreProgress() {
+  if (!savedProgress && !savedSecure) return;
+
+  if (savedProgress && savedProgress.fields) {
+    SAVE_FIELDS.forEach(id => {
+      if (savedProgress.fields[id] != null) document.getElementById(id).value = savedProgress.fields[id];
+    });
+  }
+  if (savedSecure) {
+    SECURE_FIELDS.forEach(id => {
+      if (savedSecure[id] != null) document.getElementById(id).value = savedSecure[id];
+    });
+    const files = savedSecure.files || {};
+    if (files.dl && files.dl.data) {
+      dlFileData = files.dl.data; dlFileType = files.dl.type; dlFileName = files.dl.name; dlReady = true;
+      showFileStatus('dlZone', 'dlStatus', '✓ ' + dlFileName);
+    }
+    if (files.poa && files.poa.data) {
+      poaFileData = files.poa.data; poaFileType = files.poa.type; poaFileName = files.poa.name; poaReady = true;
+      showFileStatus('poaZone', 'poaStatus', '✓ ' + poaFileName);
+    }
+  }
+
+  // Go back to the saved step, but never past a step that is now incomplete
+  // (e.g. if the tab was closed, the SSN, passwords and photos must be entered again).
+  let target = (savedProgress && savedProgress.step) || 0;
+  for (let s = 0; s < target; s++) {
+    if (!validateStep(s, true)) { target = s; break; }
+  }
+  if (target > 0) showStep(target);
+
+  document.getElementById('restoreNote').classList.add('show');
+}
+
+// Save on every keystroke, and whenever the client switches tabs or leaves the page
+document.addEventListener('input', saveProgress);
+document.addEventListener('visibilitychange', () => { if (document.hidden) saveProgress(); });
+window.addEventListener('pagehide', saveProgress);
+
+restoreProgress();
 
 // Submit — sends text first, then photos separately to avoid payload size issues
 async function submitForm() {
@@ -633,6 +759,10 @@ async function submitForm() {
     body: JSON.stringify(textData)
   })
   .then(() => {
+    // Intake received: stop autosaving and wipe saved progress from this device
+    submitted = true;
+    clearProgress();
+
     // Show success screen immediately after text data sent
     document.querySelectorAll('.card').forEach(c => c.classList.remove('visible'));
     document.getElementById('stepsRow').style.display = 'none';
