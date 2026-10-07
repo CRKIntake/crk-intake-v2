@@ -486,7 +486,11 @@ input.bad{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
     };
 
     fetch(SHEET_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(textData) })
-      .then(() => {
+      .then(r => r.text())
+      .then(txt => {
+        // Only show success if the script actually saved the intake
+        let res = null; try { res = JSON.parse(txt); } catch (e) {}
+        if (res && res.result && res.result !== 'success') throw new Error(res.message || 'Script error');
         submitted = true; clearSaved(); render();
         $('flow').hidden = true; $('resume').hidden = true;
         $('successClientId').textContent = CLIENT_ID;
